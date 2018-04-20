@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.VoucherMapper" >
+  <resultMap id="BaseResultMap" type="com.lntu.entity.Voucher" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="full_money" property="fullMoney" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="point" property="point" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="receive_num" property="receiveNum" jdbcType="INTEGER" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="BIT" />
+    <result column="del" property="del" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lntu.entity.Voucher" extends="BaseResultMap" >
+    <result column="proid" property="proid" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, shop_id, title, full_money, amount, start_time, end_time, point, count, receive_num, 
+    addtime, type, del
+  </sql>
+
+  <sql id="Blob_Column_List" >
+    proid
+  </sql>
+
+  <!--插入记录-->
+  <insert id="insert">
+    INSERT INTO bgk_voucher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="fullMoney != null" >
+        full_money,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="point != null" >
+        point,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="receiveNum != null" >
+        receive_num,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+      <if test="proid != null" >
+        proid,
+      </if>
+    </trim>
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="fullMoney != null" >
+        #{fullMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="point != null" >
+        #{point,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="receiveNum != null" >
+        #{receiveNum,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=BIT},
+      </if>
+      <if test="proid != null" >
+        #{proid,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--查询所有记录-->
+  <select id="selectAll" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_voucher
+  </select>
+
+</mapper>

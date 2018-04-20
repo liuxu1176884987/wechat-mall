@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.ProductMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.Product" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="intro" property="intro" jdbcType="VARCHAR" />
+    <result column="pro_number" property="proNumber" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="price_yh" property="priceYh" jdbcType="DECIMAL" />
+    <result column="price_jf" property="priceJf" jdbcType="INTEGER" />
+    <result column="photo_x" property="photoX" jdbcType="VARCHAR" />
+    <result column="photo_d" property="photoD" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="INTEGER" />
+    <result column="updatetime" property="updatetime" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="renqi" property="renqi" jdbcType="INTEGER" />
+    <result column="shiyong" property="shiyong" jdbcType="INTEGER" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="del" property="del" jdbcType="TINYINT" />
+    <result column="del_time" property="delTime" jdbcType="INTEGER" />
+    <result column="pro_buff" property="proBuff" jdbcType="VARCHAR" />
+    <result column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="company" property="company" jdbcType="CHAR" />
+    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="is_down" property="isDown" jdbcType="BIT" />
+    <result column="is_hot" property="isHot" jdbcType="BIT" />
+    <result column="is_sale" property="isSale" jdbcType="BIT" />
+    <result column="start_time" property="startTime" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="INTEGER" />
+    <result column="pro_type" property="proType" jdbcType="BIT" />
+  </resultMap>
+
+  <resultMap id="ResultMapWithBLOBs" type="com.lntu.entity.ProductWithBLOBs" extends="BaseResultMap" >
+    <result column="photo_string" property="photoString" jdbcType="LONGVARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, shop_id, brand_id, name, intro, pro_number, price, price_yh, price_jf, photo_x, 
+    photo_d, addtime, updatetime, sort, renqi, shiyong, num, type, del, del_time, pro_buff, 
+    cid, company, is_show, is_down, is_hot, is_sale, start_time, end_time, pro_type
+  </sql>
+
+  <sql id="Blob_Column_List">
+    photo_string, content
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/> from bgk_product WHERE del!=0 AND is_down=0
+  </select>
+
+  <select id="selectById" resultMap="ResultMapWithBLOBs">
+     SELECT <include refid="Base_Column_List"/>,<include refid="Blob_Column_List"/> FROM bgk_product WHERE id=#{id}
+  </select>
+
+  <!--按ids查询商品-->
+  <select id="selectByIds" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_product WHERE id IN
+    <foreach collection="list" item="id" open="(" separator="," close=")">
+      #{id}
+    </foreach>
+  </select>
+
+</mapper>

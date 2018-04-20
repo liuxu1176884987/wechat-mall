@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.ShoppingCarMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.ShoppingCar" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="buff" property="buff" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="gid" property="gid" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+  </resultMap>
+
+  <resultMap id="Shopping_car_view_data" type="com.lntu.view.ShoppingCarViewData">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="proName"/>
+    <result column="photo_x" property="photoX"/>
+    <result column="price" property="price"/>
+    <result column="num" property="num"/>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, pid, price, num, buff, addtime, uid, shop_id, gid, type
+  </sql>
+
+  <sql id="Column_key">
+    <trim suffixOverrides=",">
+      <if test="id != null">id,</if>
+      <if test="pid != null">pid,</if>
+      <if test="price != null">price,</if>
+      <if test="num != null">num,</if>
+      <if test="buff != null">buff,</if>
+      <if test="addtime != null">addtime,</if>
+      <if test="uid != null">uid,</if>
+      <if test="shopId != null">shop_id,</if>
+      <if test="gid != null">gid,</if>
+      <if test="type != null">type,</if>
+    </trim>
+  </sql>
+
+  <sql id="Column_value">
+    <trim suffixOverrides=",">
+      <if test="id != null">id=#{id},</if>
+      <if test="pid != null">pid=#{pid},</if>
+      <if test="price != null">price=#{price},</if>
+      <if test="num != null">num=#{num},</if>
+      <if test="buff != null">buff=#{buff},</if>
+      <if test="addtime != null">addtime=#{addtime},</if>
+      <if test="uid != null">uid=#{uid},</if>
+      <if test="shopId != null">shop_id=#{shopId},</if>
+      <if test="gid != null">gid=#{gid},</if>
+      <if test="type != null">type=#{type},</if>
+    </trim>
+  </sql>
+
+
+  <insert id="add" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+    INSERT INTO bgk_shopping_car(pid, price, num, buff, addtime, uid, shop_id, gid,type)
+    VALUES (#{pid},#{price},#{num},#{buff},#{addtime},#{uid},#{shopId},#{gid},#{type});
+  </insert>
+
+
+  <!--修改photoX-->
+  <select id="selectShoppingByUid" resultMap="Shopping_car_view_data">
+      SELECT bgk_shopping_car.id,bgk_product.name,bgk_product.photo_x,bgk_product.price,bgk_shopping_car.num
+      FROM bgk_shopping_car
+      LEFT JOIN bgk_product
+      ON bgk_shopping_car.pid = bgk_product.id
+      WHERE bgk_shopping_car.uid = #{uid}
+  </select>
+
+  <!-- 修改数量 -->
+  <update id="updateByUidId">
+      UPDATE bgk_shopping_car SET num=#{num} WHERE id=#{id} AND uid=#{uid}
+  </update>
+
+  <!-- 按照uid和pid来查询商品 -->
+  <select id="selectByUidPid" resultMap="BaseResultMap">
+      SELECT <include refid="Base_Column_List"/> FROM bgk_shopping_car WHERE uid=#{uid} AND pid=#{pid}
+  </select>
+
+  <!-- 按照uid和pid来修改商品 -->
+  <update id="updateByUidPid">
+    UPDATE bgk_shopping_car
+    <set>
+      <include refid="Column_value"/>
+    </set>
+    WHERE uid=#{uid} AND pid=#{pid}
+  </update>
+
+  <delete id="deleteByCartId">
+    DELETE FROM bgk_shopping_car WHERE id=#{cid}
+  </delete>
+
+  <!--按照ids来查询购物车中的商品-->
+  <select id="selectByIds" resultMap="Shopping_car_view_data">
+    SELECT bgk_shopping_car.id,bgk_product.name,bgk_product.photo_x,bgk_product.price,bgk_shopping_car.num
+      FROM bgk_shopping_car
+      LEFT JOIN bgk_product
+      ON bgk_shopping_car.pid = bgk_product.id
+      WHERE bgk_shopping_car.id IN
+      <foreach collection="list" item="id" open="(" separator="," close=")">
+        #{id}
+      </foreach>
+  </select>
+
+</mapper>

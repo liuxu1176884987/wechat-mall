@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lntu.dao.UserVoucherMapper">
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.UserVoucher">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="vid" jdbcType="INTEGER" property="vid" />
+    <result column="shop_id" jdbcType="INTEGER" property="shopId" />
+    <result column="full_money" jdbcType="DECIMAL" property="fullMoney" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="addtime" jdbcType="TIMESTAMP" property="addtime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, uid, vid, shop_id, full_money, amount, start_time, end_time, addtime, status
+  </sql>
+
+  <!--插入记录-->
+  <insert id="insert">
+    INSERT INTO bgk_user_voucher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="vid != null">
+        vid,
+      </if>
+      <if test="shopId != null">
+        shop_id,
+      </if>
+      <if test="fullMoney != null">
+        full_money,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="addtime != null">
+        addtime,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="vid != null">
+        #{vid,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null">
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="fullMoney != null">
+        #{fullMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null">
+        #{addtime,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <!--按uid查询优惠券-->
+  <select id="selectByUid" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_user_voucher WHERE uid=#{uid}
+  </select>
+
+</mapper>

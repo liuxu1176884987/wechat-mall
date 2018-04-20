@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.UserMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="nick_name" property="nickName" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="jifen" property="jifen" jdbcType="REAL" />
+    <result column="photo" property="photo" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="CHAR" />
+    <result column="qq_id" property="qqId" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="TINYINT" />
+    <result column="del" property="del" jdbcType="TINYINT" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, nick_name, pwd, jifen, photo, tel, qq_id, email, sex, del, openid, source,
+    addtime
+  </sql>
+
+  <!--添加用户-->
+  <insert id="insert">
+    INSERT INTO bgk_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="jifen != null" >
+        jifen,
+      </if>
+      <if test="photo != null" >
+        photo,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="qqId != null" >
+        qq_id,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+    </trim>
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null" >
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="jifen != null" >
+        #{jifen,jdbcType=REAL},
+      </if>
+      <if test="photo != null" >
+        #{photo,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=CHAR},
+      </if>
+      <if test="qqId != null" >
+        #{qqId,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=TINYINT},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByOpenid" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_user WHERE openid=#{openid}
+  </select>
+
+</mapper>

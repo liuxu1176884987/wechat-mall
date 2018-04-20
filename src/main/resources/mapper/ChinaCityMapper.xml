@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.ChinaCityMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.ChinaCity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="head" property="head" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, tid, name, code, head, type
+  </sql>
+
+  <!--查询所有省-->
+  <select id="selectAllProvince" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_china_city WHERE tid=0
+  </select>
+
+  <!--按省的id来获取城市列表-->
+  <select id="selectCityByProvinceId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_china_city WHERE tid=#{pid}
+  </select>
+
+  <!--按城市id来查找对应的区域-->
+  <select id="selectByCityId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_china_city WHERE tid = #{cid}
+  </select>
+
+</mapper>

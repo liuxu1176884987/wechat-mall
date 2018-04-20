@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.AddressMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.Address" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="CHAR" />
+    <result column="sheng" property="sheng" jdbcType="INTEGER" />
+    <result column="city" property="city" jdbcType="INTEGER" />
+    <result column="quyu" property="quyu" jdbcType="INTEGER" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="address_xq" property="addressXq" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="TINYINT" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, name, tel, sheng, city, quyu, address, address_xq, code, uid, is_default
+  </sql>
+
+  <!--按uid查询所有用户地址-->
+  <select id="selectByUid" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_address WHERE uid = #{uid}
+  </select>
+
+  <!--按uid修改默认地址-->
+  <update id="updateByUid">
+    UPDATE bgk_address SET is_default=#{isDefault} WHERE uid = #{uid}
+  </update>
+
+  <!--按id修改默认地址-->
+  <update id="updateByUidId">
+    UPDATE bgk_address SET is_default=#{isDefault} WHERE id=#{id} AND uid=#{uid}
+  </update>
+
+  <!--按uid和id来删除地址-->
+<delete id="deleteByUidId">
+    DELETE FROM bgk_address WHERE uid=#{uid} AND id=#{id}
+</delete>
+
+
+
+</mapper>
