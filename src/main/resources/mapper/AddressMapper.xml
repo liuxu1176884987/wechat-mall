@@ -36,10 +36,40 @@
   </update>
 
   <!--按uid和id来删除地址-->
-<delete id="deleteByUidId">
-    DELETE FROM bgk_address WHERE uid=#{uid} AND id=#{id}
-</delete>
+  <delete id="deleteByUidId">
+      DELETE FROM bgk_address WHERE uid=#{uid} AND id=#{id}
+  </delete>
 
-
+  <!--添加城市-->
+  <insert id="addAddress">
+    INSERT INTO bgk_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">id,</if>
+      <if test="name != null">name,</if>
+      <if test="tel != null">tel,</if>
+      <if test="sheng != null">sheng,</if>
+      <if test="city != null">city,</if>
+      <if test="quyu != null">quyu,</if>
+      <if test="address != null">address,</if>
+      <if test="addressXq != null">address_xq,</if>
+      <if test="code != null">code,</if>
+      <if test="uid != null">uid,</if>
+      <if test="isDefault != null">is_default,</if>
+    </trim>
+    VALUES
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">#{id},</if>
+      <if test="name != null">#{name},</if>
+      <if test="tel != null">#{tel},</if>
+      <if test="sheng != null">#{sheng},</if>
+      <if test="city != null">#{city},</if>
+      <if test="quyu != null">#{quyu},</if>
+      <if test="address != null">#{address},</if>
+      <if test="addressXq != null">#{addressXq},</if>
+      <if test="code != null">#{code},</if>
+      <if test="uid != null">#{uid},</if>
+      <if test="isDefault != null">#{isDefault},</if>
+    </trim>
+  </insert>
 
 </mapper>

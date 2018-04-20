@@ -22,4 +22,10 @@ public interface AddressService {
     List<ChinaCity> selectCityByProvinceId(Integer provinceId);
     // 按城市来查找区域列表
     List<ChinaCity> selectAreaByCityId(Integer cid);
+    // 按照区域id来查找区域
+    String selectAreaById(Integer id);
+    // 添加收货地址
+    Integer addAddress(Address address);
+    // 按ids查询省市区
+    String selectByProvinceCityAreaById(List ids);
 }

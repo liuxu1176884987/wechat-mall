@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +24,15 @@ public class ChinaCityMapperTest {
     public void selectAllProvince() throws Exception {
         List<ChinaCity> chinaCityList = chinaCityMapper.selectAllProvince();
         System.out.println(chinaCityList);
+    }
+
+    @Test
+    public void selectProvinceCityAreaById(){
+        List<Integer> list = new ArrayList<>();
+        list.add(5);
+        list.add(6);
+        List<ChinaCity> chinaCitieList = chinaCityMapper.selectProvinceCityAreaById(list);
+        System.out.println(chinaCitieList);
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,54 @@ public class AddressController {
             resultData.put("status",500);
         }
         return resultData;
+    }
+
+    // 获取区域区域代码
+    @PostMapping(value = "get_code")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Map getCode(@RequestParam(value = "quyu")Integer areaId,
+                       @RequestParam(value = "city")Integer city){
+        String areaCode = addressService.selectAreaById(areaId);
+
+        Map<String,Object> resultData = new HashedMap();
+        if(areaCode != null && !"".equals(areaCode)){
+            resultData.put("area",areaId);
+            resultData.put("code",areaCode);
+        }
+        return resultData;
+    }
+
+    // 保存地址
+    @PostMapping(value = "add_adds")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Map addAdds(Address address){
+
+        address.setIsDefault(new Byte("0"));
+
+        // 省id
+        Integer provinceId = address.getSheng();
+        //市id
+        Integer cityId = address.getCity();
+        //区id
+        Integer areaId = address.getQuyu();
+        List<Integer> ids = new ArrayList<>();
+        ids.add(provinceId);
+        ids.add(cityId);
+        ids.add(areaId);
+        //查询省市区
+        String addressStr = addressService.selectByProvinceCityAreaById(ids);
+
+        address.setAddressXq(addressStr+" "+address.getAddress());
+
+        Integer result = addressService.addAddress(address);
+        Map<String,Object> resultData = new HashedMap();
+        if(result > 0){
+            resultData.put("status",1);
+        }else {
+            resultData.put("status",500);
+            resultData.put("err","添加地址失败");
+        }
+        return null;
     }
 
     // 获取用户地址

@@ -64,4 +64,36 @@ public class AddressServiceImpl implements AddressService {
         return chinaCities;
     }
 
+    // 按区域id来查找区域代码
+    @Override
+    public String selectAreaById(Integer id) {
+        ChinaCity chinaCity = chinaCityMapper.selectAreaById(id);
+        if(chinaCity != null){
+            return chinaCity.getCode();
+        }
+        return null;
+    }
+
+    // 添加收货地址
+    @Override
+    @Transactional
+    public Integer addAddress(Address address) {
+        return addressMapper.addAddress(address);
+    }
+
+    // 按ids查询省市区
+    @Override
+    public String selectByProvinceCityAreaById(List ids) {
+        List<ChinaCity> chinaCityList = chinaCityMapper.selectProvinceCityAreaById(ids);
+        if(chinaCityList != null){
+            StringBuilder sb = new StringBuilder();
+            chinaCityList.forEach(chinaCity -> {
+                sb.append(chinaCity.getName()+" ");
+            });
+            String addressStr = sb.toString().trim();
+            return addressStr;
+        }
+        return null;
+    }
+
 }

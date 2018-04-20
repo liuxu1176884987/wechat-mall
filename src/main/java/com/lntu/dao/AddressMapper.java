@@ -1,7 +1,6 @@
 package com.lntu.dao;
 
 import com.lntu.entity.Address;
-import com.lntu.entity.ChinaCity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,5 +14,6 @@ public interface AddressMapper {
     Integer updateByUidId(@Param(value = "isDefault")Integer isDefault,@Param(value = "uid")String uid,@Param(value = "id")Integer id);
     // 按uid和id来删除地址
     Integer deleteByUidId(@Param(value = "uid")String uid,@Param(value = "id")Integer id);
-
+    // 增加数据
+    Integer addAddress(Address address);
 }

@@ -30,4 +30,17 @@
     SELECT <include refid="Base_Column_List"/> FROM bgk_china_city WHERE tid = #{cid}
   </select>
 
+  <!--按区域id来查找区域代码-->
+  <select id="selectAreaById" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM bgk_china_city WHERE id = #{areaId}
+  </select>
+
+  <!--按id查询省市区的名称-->
+  <select id="selectProvinceCityAreaById" resultMap="BaseResultMap">
+      SELECT name FROM bgk_china_city WHERE id IN
+      <foreach collection="list" open="(" separator="," close=")" item="ids">
+        #{ids}
+      </foreach>
+  </select>
+
 </mapper>
