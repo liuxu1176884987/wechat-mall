@@ -59,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public Integer productSc(Integer pid,String uid) {
+    public Integer productSc(Integer pid,Integer uid) {
         // 1.查询数据库,检验用户是否收藏过
         ProductSc checkProductSc = productScMapper.selectByUidPid(uid, pid);
 
@@ -91,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
 
     // 详情页初始化商品收藏
     @Override
-    public Integer initSc(Integer pid, String uid) {
+    public Integer initSc(Integer pid, Integer uid) {
         ProductSc productSc = productScMapper.selectByUidPid(uid, pid);
         if(productSc != null && productSc.getStatus() == 1){
             return 1;
@@ -111,7 +111,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductSc> selectByUid(String uid) {
+    public List<ProductSc> selectByUid(Integer uid) {
         return productScMapper.selectByUid(uid);
     }
 

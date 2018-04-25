@@ -53,7 +53,7 @@ public class ProductController {
     // 商品收藏
     @RequestMapping(value = "col")
     @ResponseStatus(value = HttpStatus.OK)
-    public Integer productSc(@RequestParam(value = "uid")String uid,
+    public Integer productSc(@RequestParam(value = "uid")Integer uid,
                              @RequestParam(value = "pid")Integer pid,
                              HttpServletRequest request){
         //1.客户端请求验证
@@ -70,7 +70,7 @@ public class ProductController {
 
     // 查看当前用户是否收藏了商品
     @PostMapping(value = "initSc")
-    public Integer initSc(@RequestParam(value = "uid")String uid,
+    public Integer initSc(@RequestParam(value = "uid")Integer uid,
                            @RequestParam(value = "pid")Integer pid){
         return productService.initSc(pid,uid);
     }

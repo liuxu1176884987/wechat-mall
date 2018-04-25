@@ -34,11 +34,11 @@ CREATE TABLE `bgk_address` (
   `is_default` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否默认地址 1默认',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户收货地址表';
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户收货地址表';
 
 /*Data for the table `bgk_address` */
 
-insert  into `bgk_address`(`id`,`name`,`tel`,`sheng`,`city`,`quyu`,`address`,`address_xq`,`code`,`uid`,`is_default`) values (10,'传承','13699887744',632,670,673,'阿虎地方可能卡萨丁你','吉林省 通化市 二道江区 阿虎地方可能卡萨丁你',220503,'okmci0fpB6FmEcD78aZb57E4AJ54',1),(2,'小花妹妹','15324466594',2151,2152,2158,'白云大道北的楷模符合你','广东省 广州市 白云区 白云大道北的楷模符合你',440111,'okmci0fpB6FmEcD78aZb57E4AJ54',0),(6,'小小花','13555889966',632,656,663,'啥时开发开始的烦恼是看得见看电视','吉林省 四平市 双辽市 啥时开发开始的烦恼是看得见看电视',220382,'1',0),(5,'小小','13455882266',1023,1125,1127,'什么街道什么路什么号什么附近','浙江省 丽水市 莲都区 什么街道什么路什么号什么附近',331102,'1',1);
+insert  into `bgk_address`(`id`,`name`,`tel`,`sheng`,`city`,`quyu`,`address`,`address_xq`,`code`,`uid`,`is_default`) values (10,'传承','13699887744',632,670,673,'阿虎地方可能卡萨丁你','吉林省 通化市 二道江区 阿虎地方可能卡萨丁你',220503,'okmci0fpB6FmEcD78aZb57E4AJ54',0),(2,'小花妹妹','15324466594',2151,2152,2158,'白云大道北的楷模符合你','广东省 广州市 白云区 白云大道北的楷模符合你',440111,'okmci0fpB6FmEcD78aZb57E4AJ54',1),(6,'小小花','13555889966',632,656,663,'啥时开发开始的烦恼是看得见看电视','吉林省 四平市 双辽市 啥时开发开始的烦恼是看得见看电视',220382,'1',0),(5,'小小','13455882266',1023,1125,1127,'什么街道什么路什么号什么附近','浙江省 丽水市 莲都区 什么街道什么路什么号什么附近',331102,'1',1),(13,'刘旭','18941809532',503,504,506,'我也不知道是哪儿','辽宁省 沈阳市 和平区 我也不知道是哪儿',210102,'okmci0fpB6FmEcD78aZb57E4AJ54',0);
 
 /*Table structure for table `bgk_admin_app` */
 
@@ -124,7 +124,7 @@ CREATE TABLE `bgk_adv` (
 
 /*Data for the table `bgk_adv` */
 
-insert  into `bgk_adv`(`id`,`name`,`photo`,`addtime`,`sort`,`type`,`action`,`position`) values (11,'主页图片','1.jpg',0,5,'index','aa.jpg',1),(12,'熊猫','2.jpg',0,3,'index','11.jpg',1),(13,'猴子','3.jpg',0,2,'index','11.jpg',1),(14,'猪','4.jpg',0,4,'index','11.jpg',1);
+insert  into `bgk_adv`(`id`,`name`,`photo`,`addtime`,`sort`,`type`,`action`,`position`) values (11,'主页图片','1.jpg',0,1,'index','aa.jpg',1),(12,'熊猫','2.jpg',0,3,'index','11.jpg',1),(13,'猴子','3.jpg',0,2,'index','11.jpg',1),(14,'猪','4.jpg',0,4,'index','11.jpg',1);
 
 /*Table structure for table `bgk_attribute` */
 
@@ -508,14 +508,14 @@ DROP TABLE IF EXISTS `bgk_product_sc`;
 CREATE TABLE `bgk_product_sc` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商品收藏表',
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '商品ID',
-  `uid` varchar(50) NOT NULL DEFAULT '' COMMENT '用户ID',
+  `uid` int(11) NOT NULL DEFAULT '0' COMMENT '用户ID',
   `status` tinyint(2) DEFAULT '1' COMMENT '状态 1正常 0删除',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bgk_product_sc` */
 
-insert  into `bgk_product_sc`(`id`,`pid`,`uid`,`status`) values (5,264,'okmci0fpB6FmEcD78aZb57E4AJ54',1),(6,268,'okmci0fpB6FmEcD78aZb57E4AJ54',0),(7,265,'okmci0fpB6FmEcD78aZb57E4AJ54',1);
+insert  into `bgk_product_sc`(`id`,`pid`,`uid`,`status`) values (9,264,10,0);
 
 /*Table structure for table `bgk_program` */
 
@@ -661,11 +661,11 @@ CREATE TABLE `bgk_shopping_car` (
   `gid` int(11) DEFAULT '0' COMMENT '规格id',
   `type` tinyint(2) DEFAULT '2' COMMENT '0是热卖，1是团购，2是普通商品',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bgk_shopping_car` */
 
-insert  into `bgk_shopping_car`(`id`,`pid`,`price`,`num`,`buff`,`addtime`,`uid`,`shop_id`,`gid`,`type`) values (15,264,'13.00',1,'','2018-04-17 09:14:39','okmci0fpB6FmEcD78aZb57E4AJ54',0,NULL,NULL),(16,265,'37.90',7,'','2018-04-17 09:14:43','okmci0fpB6FmEcD78aZb57E4AJ54',0,NULL,NULL);
+insert  into `bgk_shopping_car`(`id`,`pid`,`price`,`num`,`buff`,`addtime`,`uid`,`shop_id`,`gid`,`type`) values (15,264,'13.00',18,'','2018-04-17 09:14:39','okmci0fpB6FmEcD78aZb57E4AJ54',0,NULL,NULL),(16,265,'37.90',12,'','2018-04-17 09:14:43','okmci0fpB6FmEcD78aZb57E4AJ54',0,NULL,NULL),(17,268,'45.00',1,'','2018-04-21 08:19:53','okmci0fpB6FmEcD78aZb57E4AJ54',0,NULL,NULL);
 
 /*Table structure for table `bgk_student_style` */
 
@@ -709,11 +709,11 @@ CREATE TABLE `bgk_user` (
   `addtime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建日期',
   PRIMARY KEY (`id`),
   UNIQUE KEY `bgk_user_openid_uindex` (`openid`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bgk_user` */
 
-insert  into `bgk_user`(`id`,`name`,`nick_name`,`pwd`,`jifen`,`photo`,`tel`,`qq_id`,`email`,`sex`,`del`,`openid`,`source`,`addtime`) values (6,'','流星雨','',0,'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLDOibiapticcxazicSNusree3VXSWhEIkibk45iaOc1wwFDcMtQ8zcwLRh5VQe2Efjg6qQQKFTmHOaicBYQ/0','','','',1,0,'okmci0fpB6FmEcD78aZb57E4AJ54','wechat','2018-04-16 08:45:40');
+insert  into `bgk_user`(`id`,`name`,`nick_name`,`pwd`,`jifen`,`photo`,`tel`,`qq_id`,`email`,`sex`,`del`,`openid`,`source`,`addtime`) values (10,'','流星雨','',0,'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLDOibiapticcxazicSNusree3VXSWhEIkibk45iaOc1wwFDcMtQ8zcwLRh5VQe2Efjg6qQQKFTmHOaicBYQ/0',NULL,'0',NULL,1,0,'okmci0fpB6FmEcD78aZb57E4AJ54','wechat','2018-04-25 16:14:02');
 
 /*Table structure for table `bgk_user_course` */
 

@@ -38,4 +38,19 @@ public class UserMapperTest {
         System.out.println(user);
     }
 
+    @Test
+    public void updateByOpenid(){
+        User user = new User();
+        user.setName("柳絮22222222222222222");
+        user.setNickName("哈哈哈哈哈哈哈哈哈哈哈");
+        user.setPwd("132465798");
+        user.setJifen((float) 2.3);
+        user.setPhoto("c://www.");
+        user.setTel("18941809532");
+        user.setEmail("wwwwwww");
+        user.setOpenid("aaaaaaaaaaaaaaaaabbaa");
+        user.setSource("wechat");
+        userMapper.updateByOpenid(user);
+    }
+
 }

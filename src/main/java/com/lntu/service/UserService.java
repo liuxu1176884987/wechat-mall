@@ -1,6 +1,6 @@
 package com.lntu.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.lntu.entity.User;
 
 /**
@@ -9,5 +9,5 @@ import com.lntu.entity.User;
  */
 public interface UserService {
     // 添加用户
-    String add(User user) throws JsonProcessingException;
+    Integer add(User user);
 }

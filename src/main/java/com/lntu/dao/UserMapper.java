@@ -8,4 +8,6 @@ public interface UserMapper {
     Integer insert(User user);
     // 按照openid查询用户
     User selectByOpenid(@Param(value = "openid") String openid);
+    // 按照openid修改用户
+    Integer updateByOpenid(User user);
 }

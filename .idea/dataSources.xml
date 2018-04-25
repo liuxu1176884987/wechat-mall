@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="wechat_mall@localhost" uuid="1e876fe1-9891-46dc-9fa3-7cbcadf30751">
+    <data-source source="LOCAL" name="wechat_mall@localhost" uuid="ba1e1c01-406d-487e-b22f-d7e01a48b0cb">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>

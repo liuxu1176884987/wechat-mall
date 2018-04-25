@@ -18,9 +18,6 @@ public class JsonData{
     //返回消息
     private String msg;
 
-    //返回错误消息
-    private String err;
-
     //返回数据
     private Object data;
 
@@ -35,12 +32,6 @@ public class JsonData{
         this.data = data;
     }
 
-    public JsonData(Integer state, String msg, String err) {
-        this.state = state;
-        this.msg = msg;
-        this.err = err;
-        this.data = data;
-    }
 
     public JsonData(MallStatusEnum mallStatusEnum, Object data){
         this.state = mallStatusEnum.getState();

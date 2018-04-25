@@ -16,11 +16,11 @@ public interface ProductService {
     // 按照id查询商品
     ProductWithBLOBs selectById(Integer id);
     // 按照pid和uid查询商品
-    Integer productSc(Integer productId,String userId);
+    Integer productSc(Integer productId,Integer userId);
     // 初始化收藏
-    Integer initSc(Integer pid,String uid);
+    Integer initSc(Integer pid,Integer uid);
     // 按照ids查找商品
     List<Product> selectByIds(List ids);
     // 按uid来查找收藏的商品
-    List<ProductSc> selectByUid(String uid);
+    List<ProductSc> selectByUid(Integer uid);
 }

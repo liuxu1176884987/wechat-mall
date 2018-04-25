@@ -47,14 +47,10 @@ druid:
 
 wechat-request-token: SnGW5ZkjKeYrbdlHQcwoIuF6xmiLCT
 
-redis:
-  host: localhost
-  port: 6379
-#  password:
-
-# redis服务器的key
-REDIS_KEY:
-  LOGIN: LOGIN_KEY
-
-# 登陆失效时间  单位:(分钟)
-REDIS_LOGIN_FAILURE_TIME: 30
+wechat:
+  miniapp:
+    appid: wx53564d8cbb2933d8
+    secret: 7ea58ad28ee995abef577969eee9addb
+    token: tFXxidXLTUr18BFD0LT3
+    aesKey: kO6R8NhRDasa4ysoyNU5xCPoMLPxfh4ELf7Lqha8GZr
+    msgDataFormat: JSON

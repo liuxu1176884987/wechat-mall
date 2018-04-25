@@ -25,7 +25,7 @@
   </sql>
 
   <!--添加用户-->
-  <insert id="insert">
+  <insert id="insert" useGeneratedKeys="true" keyColumn="id" keyProperty="id" >
     INSERT INTO bgk_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null" >
@@ -118,8 +118,30 @@
     </trim>
   </insert>
 
+  <!--按openid查用户信息-->
   <select id="selectByOpenid" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> FROM bgk_user WHERE openid=#{openid}
   </select>
+
+  <!--修改用户信息-->
+  <update id="updateByOpenid">
+    UPDATE bgk_user SET
+    <trim suffixOverrides=",">
+      <if test="id != null">id=#{id},</if>
+      <if test="name != null">name=#{name},</if>
+      <if test="nickName != null">nick_name=#{nickName},</if>
+      <if test="pwd != null">pwd=#{pwd},</if>
+      <if test="jifen != null">jifen=#{jifen},</if>
+      <if test="photo != null">photo=#{photo},</if>
+      <if test="tel != null">tel=#{tel},</if>
+      <if test="qqId != null">qq_id=#{qqId},</if>
+      <if test="email != null">email=#{email},</if>
+      <if test="sex != null">sex=#{sex},</if>
+      <if test="del != null">del=#{del},</if>
+      <if test="openid != null">openid=#{openid},</if>
+      <if test="addtime != null">addtime=#{addtime},</if>
+    </trim>
+    where openid = #{openid}
+  </update>
 
 </mapper>

@@ -22,7 +22,7 @@ public class CollectionController {
 
     @PostMapping(value = "GetCollectCategoryList")
     @ResponseStatus(value = HttpStatus.OK)
-    public Map<String,Object> getCollectionList(@RequestParam(value = "uid")String uid){
+    public Map<String,Object> getCollectionList(@RequestParam(value = "uid")Integer uid){
         List<ProductSc> productScList = productService.selectByUid(uid);
 
         return null;

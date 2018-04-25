@@ -21,4 +21,5 @@ public class ProductDetailViewData{
     private String[] attrValueList;
     //请求失败返回的错误信息
     private String err;
+
 }

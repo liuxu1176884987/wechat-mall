@@ -20,7 +20,7 @@ public class ProductScMapperTest {
     @Test
     public void insert() throws Exception {
         ProductSc productSc = new ProductSc();
-        productSc.setUid("abcdef");
+        productSc.setUid(10);
         productSc.setPid(2);
         productSc.setStatus(new Byte("1"));
         productScMapper.insert(productSc);
@@ -28,13 +28,13 @@ public class ProductScMapperTest {
 
     @Test
     public void selectByUidPid(){
-        ProductSc productSc = productScMapper.selectByUidPid("abcdef", 2);
+        ProductSc productSc = productScMapper.selectByUidPid(10, 2);
         System.out.println(productSc);
     }
 
     @Test
     public void updateByUidPid(){
-        productScMapper.updateByUidPid("abcdef",2,2);
+        productScMapper.updateByUidPid(10,2,2);
     }
 
 }
