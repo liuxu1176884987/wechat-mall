@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.OrderProductMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.OrderProduct" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pay_sn" property="paySn" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="photo_x" property="photoX" jdbcType="VARCHAR" />
+    <result column="pro_buff" property="proBuff" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="pro_guige" property="proGuige" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, pid, pay_sn, order_id, name, price, photo_x, pro_buff, addtime, num, pro_guige
+  </sql>
+
+
+  <!--批量插入订单商品-->
+  <insert id="insertOrderProduct">
+    insert into bgk_order_product(pid, pay_sn, order_id, name, price, photo_x, pro_buff, addtime, num, pro_guige) values
+    <foreach collection="orderProductList" item="orderProduct" separator=",">
+      (#{orderProduct.pid},#{orderProduct.paySn},#{orderProduct.orderId},#{orderProduct.name},#{orderProduct.price},#{orderProduct.photoX},
+      #{orderProduct.proBuff},#{orderProduct.addtime},#{orderProduct.num},#{orderProduct.proGuige})
+    </foreach>
+  </insert>
+
+
+
+
+
+
+
+
+
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bgk_order_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bgk_order_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lntu.entity.OrderProduct" >
+    insert into bgk_order_product (id, pid, pay_sn, 
+      order_id, name, price, 
+      photo_x, pro_buff, addtime, 
+      num, pro_guige)
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{paySn,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{photoX,jdbcType=VARCHAR}, #{proBuff,jdbcType=VARCHAR}, #{addtime,jdbcType=INTEGER}, 
+      #{num,jdbcType=INTEGER}, #{proGuige,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lntu.entity.OrderProduct" >
+    insert into bgk_order_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="paySn != null" >
+        pay_sn,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="photoX != null" >
+        photo_x,
+      </if>
+      <if test="proBuff != null" >
+        pro_buff,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="proGuige != null" >
+        pro_guige,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="paySn != null" >
+        #{paySn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="photoX != null" >
+        #{photoX,jdbcType=VARCHAR},
+      </if>
+      <if test="proBuff != null" >
+        #{proBuff,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="proGuige != null" >
+        #{proGuige,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lntu.entity.OrderProduct" >
+    update bgk_order_product
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="paySn != null" >
+        pay_sn = #{paySn,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="photoX != null" >
+        photo_x = #{photoX,jdbcType=VARCHAR},
+      </if>
+      <if test="proBuff != null" >
+        pro_buff = #{proBuff,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=INTEGER},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="proGuige != null" >
+        pro_guige = #{proGuige,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lntu.entity.OrderProduct" >
+    update bgk_order_product
+    set pid = #{pid,jdbcType=INTEGER},
+      pay_sn = #{paySn,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      photo_x = #{photoX,jdbcType=VARCHAR},
+      pro_buff = #{proBuff,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=INTEGER},
+      num = #{num,jdbcType=INTEGER},
+      pro_guige = #{proGuige,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

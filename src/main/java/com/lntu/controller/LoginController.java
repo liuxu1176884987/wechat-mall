@@ -10,12 +10,17 @@ import com.lntu.service.UserService;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 登陆接口
@@ -31,12 +36,20 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    // redis服务
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Value("${LOGIN.SESSION_KEY_PRE}")
+    private String SESSION_KEY_PRE;
+
     /**
      * @param  code 从前端传来的code来换取openid和sessionId
      * */
     @PostMapping(value = "getsessionkey")
     @ResponseStatus(value = HttpStatus.OK)
-    public JsonData getsessionkey(@RequestParam(value = "code")String code){
+    public JsonData getsessionkey(@RequestParam(value = "code")String code,
+                                  HttpSession session){
 
         try {
             // 1.获取用户的sessionId 和 openid
@@ -45,6 +58,8 @@ public class LoginController {
             if(sessionInfo != null){
                 resultData.put("session_key",sessionInfo.getSessionKey());
                 resultData.put("openid",sessionInfo.getOpenid());
+                // 设置session有效时间为30分钟
+                stringRedisTemplate.opsForValue().set(SESSION_KEY_PRE+":"+sessionInfo.getSessionKey(),"login success",30,TimeUnit.MINUTES);
                 return JsonData.success(1,"登录成功",resultData);
             }else {
                 return JsonData.fail(0,"登录失败");
@@ -68,34 +83,34 @@ public class LoginController {
     public JsonData authlogin(@RequestParam(value = "gender")Byte gender,
                               @RequestParam(value = "NickName")String nickName,
                               @RequestParam(value = "HeadUrl")String headUrl,
-                              @RequestParam(value = "openid")String openid){
-        // 1.新建用户对象
-        User user = new User();
-        user.setName("");
-        user.setPwd("");
-        user.setNickName(nickName);
-        user.setPhoto(headUrl);
-        user.setSex(gender);
-        user.setOpenid(openid);
-        user.setAddtime(new Date());
-        user.setSource("wechat");
-        // 2.添加用户信息
-        Integer userId = userService.add(user);
+                              @RequestParam(value = "openid")String openid,
+                              @RequestParam(value = "SessionId")String sessionId,
+                              HttpSession session){
 
-        // 3.返回前端数据
-        Map<String,Object> resultData = new HashMap<>();
-        resultData.put("id",userId);
-        resultData.put("NickName",nickName);
-        resultData.put("HeadUrl",headUrl);
+        String result = stringRedisTemplate.opsForValue().get(SESSION_KEY_PRE+":" + sessionId);
+        if("login success".equals(result)){
+            // 1.新建用户对象
+            User user = new User();
+            user.setName("");
+            user.setPwd("");
+            user.setNickName(nickName);
+            user.setPhoto(headUrl);
+            user.setSex(gender);
+            user.setOpenid(openid);
+            user.setAddtime(new Date());
+            user.setSource("wechat");
+            // 2.添加用户信息
+            Integer userId = userService.add(user);
 
-        // 4.判断返回成功或失败,按照返回用户的id是否为0判断
-        if(userId == null || userId == 0){
-            return JsonData.fail(4002,"登陆失败");
+            // 3.返回前端数据
+            Map<String,Object> resultData = new HashMap<>();
+            resultData.put("id",userId);
+            resultData.put("NickName",nickName);
+            resultData.put("HeadUrl",headUrl);
+            return JsonData.success(1,"登陆成功",resultData);
+        }else {
+            return JsonData.fail(402,"登录失败");
         }
-
-        System.out.println(userId);
-
-        return JsonData.success(1,"登陆成功",resultData);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.lntu.service.impl;
 
+import com.lntu.entity.Address;
 import com.lntu.service.AddressService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,6 +68,12 @@ public class AddressServiceImplTest {
         list.add(6);
         String s = addressService.selectByProvinceCityAreaById(list);
         System.out.println(s);
+    }
+
+    @Test
+    public void selectDefaultByUid(){
+        Address address = addressService.selectDefaultByUid(10);
+        System.out.println(address);
     }
 
 }

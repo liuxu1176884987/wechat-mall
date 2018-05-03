@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.lntu.entity.Order" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_sn" property="orderSn" jdbcType="VARCHAR" />
+    <result column="pay_sn" property="paySn" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="del" property="del" jdbcType="TINYINT" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="price_h" property="priceH" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="vid" property="vid" jdbcType="INTEGER" />
+    <result column="receiver" property="receiver" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="CHAR" />
+    <result column="address_xq" property="addressXq" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="INTEGER" />
+    <result column="post" property="post" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="post_remark" property="postRemark" jdbcType="VARCHAR" />
+    <result column="product_num" property="productNum" jdbcType="INTEGER" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="kuaidi_name" property="kuaidiName" jdbcType="VARCHAR" />
+    <result column="kuaidi_num" property="kuaidiNum" jdbcType="VARCHAR" />
+    <result column="back" property="back" jdbcType="CHAR" />
+    <result column="back_remark" property="backRemark" jdbcType="VARCHAR" />
+    <result column="back_addtime" property="backAddtime" jdbcType="INTEGER" />
+    <result column="order_type" property="orderType" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_sn, pay_sn, shop_id, uid, price, amount, addtime, del, type, price_h, status, 
+    vid, receiver, tel, address_xq, code, post, remark, post_remark, product_num, trade_no, 
+    kuaidi_name, kuaidi_num, back, back_remark, back_addtime, order_type
+  </sql>
+
+  <!--增加订单-->
+  <insert id="insertOrder" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="com.lntu.entity.Order" >
+    insert into bgk_order (id, order_sn, pay_sn,
+      shop_id, uid, price,
+      amount, addtime, del,
+      type, price_h, status,
+      vid, receiver, tel, address_xq,
+      code, post, remark,
+      post_remark, product_num, trade_no,
+      kuaidi_name, kuaidi_num, back,
+      back_remark, back_addtime, order_type
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderSn,jdbcType=VARCHAR}, #{paySn,jdbcType=VARCHAR},
+      #{shopId,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL},
+      #{amount,jdbcType=DECIMAL}, #{addtime,jdbcType=INTEGER}, #{del,jdbcType=TINYINT},
+      #{type,jdbcType=CHAR}, #{priceH,jdbcType=DECIMAL}, #{status,jdbcType=TINYINT},
+      #{vid,jdbcType=INTEGER}, #{receiver,jdbcType=VARCHAR}, #{tel,jdbcType=CHAR}, #{addressXq,jdbcType=VARCHAR},
+      #{code,jdbcType=INTEGER}, #{post,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR},
+      #{postRemark,jdbcType=VARCHAR}, #{productNum,jdbcType=INTEGER}, #{tradeNo,jdbcType=VARCHAR},
+      #{kuaidiName,jdbcType=VARCHAR}, #{kuaidiNum,jdbcType=VARCHAR}, #{back,jdbcType=CHAR},
+      #{backRemark,jdbcType=VARCHAR}, #{backAddtime,jdbcType=INTEGER}, #{orderType,jdbcType=TINYINT}
+      )
+  </insert>
+
+  <!--按id修改订单-->
+  <update id="updateOrderById" parameterType="com.lntu.entity.Order" >
+    update bgk_order
+    set order_sn = #{orderSn,jdbcType=VARCHAR},
+      pay_sn = #{paySn,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      amount = #{amount,jdbcType=DECIMAL},
+      addtime = #{addtime,jdbcType=INTEGER},
+      del = #{del,jdbcType=TINYINT},
+      type = #{type,jdbcType=CHAR},
+      price_h = #{priceH,jdbcType=DECIMAL},
+      status = #{status,jdbcType=TINYINT},
+      vid = #{vid,jdbcType=INTEGER},
+      receiver = #{receiver,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=CHAR},
+      address_xq = #{addressXq,jdbcType=VARCHAR},
+      code = #{code,jdbcType=INTEGER},
+      post = #{post,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      post_remark = #{postRemark,jdbcType=VARCHAR},
+      product_num = #{productNum,jdbcType=INTEGER},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      kuaidi_name = #{kuaidiName,jdbcType=VARCHAR},
+      kuaidi_num = #{kuaidiNum,jdbcType=VARCHAR},
+      back = #{back,jdbcType=CHAR},
+      back_remark = #{backRemark,jdbcType=VARCHAR},
+      back_addtime = #{backAddtime,jdbcType=INTEGER},
+      order_type = #{orderType,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+
+
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bgk_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bgk_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.lntu.entity.Order" >
+    insert into bgk_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderSn != null" >
+        order_sn,
+      </if>
+      <if test="paySn != null" >
+        pay_sn,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="del != null" >
+        del,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="priceH != null" >
+        price_h,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="vid != null" >
+        vid,
+      </if>
+      <if test="receiver != null" >
+        receiver,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="addressXq != null" >
+        address_xq,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="post != null" >
+        post,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="postRemark != null" >
+        post_remark,
+      </if>
+      <if test="productNum != null" >
+        product_num,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="kuaidiName != null" >
+        kuaidi_name,
+      </if>
+      <if test="kuaidiNum != null" >
+        kuaidi_num,
+      </if>
+      <if test="back != null" >
+        back,
+      </if>
+      <if test="backRemark != null" >
+        back_remark,
+      </if>
+      <if test="backAddtime != null" >
+        back_addtime,
+      </if>
+      <if test="orderType != null" >
+        order_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderSn != null" >
+        #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="paySn != null" >
+        #{paySn,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=INTEGER},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="priceH != null" >
+        #{priceH,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="vid != null" >
+        #{vid,jdbcType=INTEGER},
+      </if>
+      <if test="receiver != null" >
+        #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=CHAR},
+      </if>
+      <if test="addressXq != null" >
+        #{addressXq,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=INTEGER},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="postRemark != null" >
+        #{postRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="productNum != null" >
+        #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="kuaidiName != null" >
+        #{kuaidiName,jdbcType=VARCHAR},
+      </if>
+      <if test="kuaidiNum != null" >
+        #{kuaidiNum,jdbcType=VARCHAR},
+      </if>
+      <if test="back != null" >
+        #{back,jdbcType=CHAR},
+      </if>
+      <if test="backRemark != null" >
+        #{backRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="backAddtime != null" >
+        #{backAddtime,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lntu.entity.Order" >
+    update bgk_order
+    <set >
+      <if test="orderSn != null" >
+        order_sn = #{orderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="paySn != null" >
+        pay_sn = #{paySn,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=INTEGER},
+      </if>
+      <if test="del != null" >
+        del = #{del,jdbcType=TINYINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="priceH != null" >
+        price_h = #{priceH,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="vid != null" >
+        vid = #{vid,jdbcType=INTEGER},
+      </if>
+      <if test="receiver != null" >
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=CHAR},
+      </if>
+      <if test="addressXq != null" >
+        address_xq = #{addressXq,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=INTEGER},
+      </if>
+      <if test="post != null" >
+        post = #{post,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="postRemark != null" >
+        post_remark = #{postRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="productNum != null" >
+        product_num = #{productNum,jdbcType=INTEGER},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="kuaidiName != null" >
+        kuaidi_name = #{kuaidiName,jdbcType=VARCHAR},
+      </if>
+      <if test="kuaidiNum != null" >
+        kuaidi_num = #{kuaidiNum,jdbcType=VARCHAR},
+      </if>
+      <if test="back != null" >
+        back = #{back,jdbcType=CHAR},
+      </if>
+      <if test="backRemark != null" >
+        back_remark = #{backRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="backAddtime != null" >
+        back_addtime = #{backAddtime,jdbcType=INTEGER},
+      </if>
+      <if test="orderType != null" >
+        order_type = #{orderType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

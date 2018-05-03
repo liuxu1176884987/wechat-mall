@@ -43,8 +43,16 @@ public class JsonData{
         return new JsonData(state,msg);
     }
 
+    public static JsonData fail(MallStatusEnum mallStatusEnum){
+        return new JsonData(mallStatusEnum.getState(),mallStatusEnum.getMsg());
+    }
+
     public static JsonData success(Integer state,String msg,Object data){
         return new JsonData(state,msg,data);
+    }
+
+    public static JsonData success(MallStatusEnum mallStatusEnum,Object obj){
+        return new JsonData(mallStatusEnum.getState(),mallStatusEnum.getMsg(),obj);
     }
 
 }

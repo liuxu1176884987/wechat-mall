@@ -3,12 +3,14 @@ package com.lntu.service.impl;
 import com.lntu.dao.ProductMapper;
 import com.lntu.dao.ShoppingCarMapper;
 import com.lntu.entity.ShoppingCar;
+import com.lntu.service.ProductService;
 import com.lntu.service.ShoppingCarService;
 import com.lntu.view.ShoppingCarViewData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -25,6 +27,9 @@ public class ShoppingCarImpl implements ShoppingCarService {
     // 商品服务
     @Autowired
     private ProductMapper productMapper;
+
+    // 购物车商品总价格
+    private BigDecimal totalPrice = BigDecimal.ZERO;
 
     @Override
     @Transactional
@@ -44,7 +49,7 @@ public class ShoppingCarImpl implements ShoppingCarService {
     }
 
     @Override
-    public List<ShoppingCar> shoppingCarList(String uid) {
+    public List<ShoppingCar> shoppingCarList(Integer uid) {
         List<ShoppingCar> shoppingCars = shoppingCarMapper.selectShoppingByUid(uid);
         if(shoppingCars!=null && shoppingCars.size()>0){
             return shoppingCars;
@@ -53,7 +58,7 @@ public class ShoppingCarImpl implements ShoppingCarService {
     }
 
     @Override
-    public Integer updateByUidId(String uid, Integer id, Integer num) {
+    public Integer updateByUidId(Integer uid, Integer id, Integer num) {
         return shoppingCarMapper.updateByUidId(uid,id,num);
     }
 
@@ -67,6 +72,20 @@ public class ShoppingCarImpl implements ShoppingCarService {
     @Override
     public List<ShoppingCarViewData> productViewDataByIds(List ids) {
         return shoppingCarMapper.selectByIds(ids);
+    }
+
+    /**
+     * @param ids 购物车id
+     * @return null 计算出的购物车商品总价格
+     * */
+    @Override
+    public BigDecimal computeShoppingPrice(List<Integer> ids) {
+        List<ShoppingCarViewData> shoppingCarViewData = shoppingCarMapper.selectByIds(ids);
+        totalPrice = BigDecimal.ZERO;
+        shoppingCarViewData.forEach(shoppingCar->{
+            totalPrice = totalPrice.add(shoppingCar.getPriceYh().multiply(new BigDecimal(shoppingCar.getNum())));
+        });
+        return totalPrice;
     }
 
 }

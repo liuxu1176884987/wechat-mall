@@ -1,15 +1,19 @@
 package com.lntu.controller;
 
+import com.lntu.common.JsonData;
 import com.lntu.entity.Address;
 import com.lntu.entity.ChinaCity;
 import com.lntu.service.AddressService;
 import org.apache.commons.collections.map.HashedMap;
 import org.aspectj.lang.annotation.DeclareAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,14 @@ public class AddressController {
     // 地址服务
     @Autowired
     private AddressService addressService;
+
+    // Redis服务
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    // sessionKey前缀
+    @Value("${LOGIN.SESSION_KEY_PRE}")
+    private String SESSION_KEY_PRE;
 
     // 获取中国所有省
     @PostMapping(value = "get_province")
@@ -123,7 +135,7 @@ public class AddressController {
     // 获取用户地址
     @PostMapping(value = "index")
     @ResponseStatus(value = HttpStatus.OK)
-    public Map index(@RequestParam(value = "user_id")String uid){
+    public Map index(@RequestParam(value = "user_id")Integer uid){
         List<Address> addresses = addressService.selectAddressByUid(uid);
         Map<String,Object> resultData = new HashedMap();
         resultData.put("adds",addresses);
@@ -133,7 +145,7 @@ public class AddressController {
     // 设置默认收货地址
     @PostMapping(value = "set_default")
     @ResponseStatus(value = HttpStatus.OK)
-    public Map setDefault(@RequestParam(value = "uid")String uid,
+    public Map setDefault(@RequestParam(value = "uid")Integer uid,
                           @RequestParam(value = "addr_id")Integer addrId,
                           @RequestParam(value = "sessionKey")String sessionKey,
                           HttpServletRequest request){
@@ -152,18 +164,19 @@ public class AddressController {
     // 删除收货地址
     @PostMapping(value = "del_adds")
     @ResponseStatus(value = HttpStatus.OK)
-    @DeclareAnnotation(value = "login")
-    public Map delAdds(@RequestParam(value = "id_arr")Integer addrId,
-                       @RequestParam(value = "sessionKey")String sessionKey,
-                       @RequestParam(value = "user_id")String uid){
-        Integer result = addressService.deleteByUidId(uid, addrId);
-        Map<String,Object> resultData = new HashedMap();
-        if(result > 0){
-            resultData.put("status",1);
-        }else {
-            resultData.put("status",500);
+    public JsonData delAdds(@RequestParam(value = "id_arr")Integer addrId,
+                            @RequestParam(value = "sessionKey")String sessionKey,
+                            @RequestParam(value = "user_id")Integer uid){
+        // 1.判断是否登陆
+        String checkStr = stringRedisTemplate.opsForValue().get(SESSION_KEY_PRE + ":" + sessionKey);
+
+        if("login success".equals(checkStr)){
+            Integer result = addressService.deleteByUidId(uid, addrId);
+            if(result > 0){
+                return JsonData.success(1,"收货地址删除成功",null);
+            }
         }
-        return resultData;
+        return JsonData.fail(500,"删除失败");
     }
 
 }

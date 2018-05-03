@@ -30,6 +30,14 @@ spring:
     # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
+  # redis配置
+  redis:
+    host: 112.74.164.219
+    port: 6379
+    database: 0
+    password: tGgdXfLFQvEquUF6djKePpB1leBg8ca0
+
+
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 
@@ -54,3 +62,9 @@ wechat:
     token: tFXxidXLTUr18BFD0LT3
     aesKey: kO6R8NhRDasa4ysoyNU5xCPoMLPxfh4ELf7Lqha8GZr
     msgDataFormat: JSON
+
+LOGIN:
+  SESSION_KEY_PRE: LOGIN_KEY
+
+# 订单起送价格    业务逻辑:如果订单小于N元就添加1元的运费,如果大于等于N元就没有运费
+starting_price: 7

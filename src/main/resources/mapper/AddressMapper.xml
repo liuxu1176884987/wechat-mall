@@ -12,7 +12,7 @@
     <result column="address" property="address" jdbcType="VARCHAR" />
     <result column="address_xq" property="addressXq" jdbcType="VARCHAR" />
     <result column="code" property="code" jdbcType="INTEGER" />
-    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="is_default" property="isDefault" jdbcType="TINYINT" />
   </resultMap>
 
@@ -71,5 +71,15 @@
       <if test="isDefault != null">#{isDefault},</if>
     </trim>
   </insert>
+
+  <!--查询默认地址-->
+  <select id="selectDefaultAddressByUid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from bgk_address where uid=#{uid} and is_default = 1
+  </select>
+
+  <!--按id来查询地址-->
+  <select id="selectById" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from bgk_address where id=#{id}
+  </select>
 
 </mapper>

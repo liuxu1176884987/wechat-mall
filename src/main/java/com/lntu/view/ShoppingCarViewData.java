@@ -23,6 +23,8 @@ public class ShoppingCarViewData {
     private BigDecimal price;
     // 商品数量
     private Integer num;
+    // 商品优惠价格
+    private BigDecimal priceYh;
 
     public ShoppingCarViewData() {
     }

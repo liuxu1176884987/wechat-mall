@@ -1,5 +1,6 @@
 package com.lntu.controller;
 
+import com.lntu.common.JsonData;
 import com.lntu.entity.ProductWithBLOBs;
 import com.lntu.entity.ShoppingCar;
 import com.lntu.enums.MallStatusEnum;
@@ -10,6 +11,7 @@ import com.lntu.utils.WechatRequestCheck;
 import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,24 +37,31 @@ public class ShoppingController {
     @Autowired
     private ProductService productService;
 
-    // 获取加密token
-    @Value("${wechat-request-token}")
-    private String token;
+    // Redis服务
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
 
-    // 添加商品到购物车
+    // sessionKey前缀
+    @Value("${LOGIN.SESSION_KEY_PRE}")
+    private String SESSION_KEY_PRE;
+
+
+    /**
+     * 添加商品到购物车
+     * @param userId 用户id
+     * @param productId 商品id
+     * @param buynum 购买数量
+     * @param sessionKey 验证参数
+     * */
     @PostMapping(value = "add")
     @ResponseStatus(value = HttpStatus.OK)
-    public Map add(@RequestParam(value = "uid")String userId,
-                      @RequestParam(value = "pid")Integer productId,
-                      @RequestParam(value = "num")Integer buynum,
-                      HttpServletRequest request){
-
-        // 验证是否是微信小程序发来的请求
-        if(WechatRequestCheck.check(request,token)){
-            //返回信息
-            Map<String,Object> resultParam = new HashedMap();
-
-            // 1.按照id查询商品
+    public JsonData add(@RequestParam(value = "uid")Integer userId,
+                        @RequestParam(value = "pid")Integer productId,
+                        @RequestParam(value = "num")Integer buynum,
+                        @RequestParam(value = "sessionKey")String sessionKey){
+        String checkStr = stringRedisTemplate.opsForValue().get(SESSION_KEY_PRE + ":" + sessionKey);
+        if("login success".equals(checkStr)){
+            // 1.验证成功
             ProductWithBLOBs product = productService.selectById(productId);
             if(product != null){
                 ShoppingCar shoppingCar = new ShoppingCar();
@@ -65,40 +74,39 @@ public class ShoppingController {
                 shoppingCar.setShopId(0);
                 // 返回添加购物车的id号
                 Integer cid = shoppingCarService.add(shoppingCar);
-                resultParam.put("cart_id",cid);
-                resultParam.put("state",1);
-                return resultParam;
+                return JsonData.success(1,"添加购物车成功",cid);
             }
-            resultParam.put("err","添加商品失败");
-            return resultParam;
+            return JsonData.fail(500,"不存在此商品");
         }
-
-        Map<String,Object> param = new HashedMap();
-        param.put("uid",userId);
-        param.put("pid",productId);
-        param.put("num",buynum);
-        throw new MallException(MallStatusEnum.ADD_SHOPPING_CAR_FAIL,param);
+        return JsonData.fail(402,"验证失败");
     }
 
 
     // 显示购物车主页数据
     @PostMapping(value = "index")
-    public Map index(@RequestParam(value = "user_id")String userId){
-        List<ShoppingCar> shoppingCars = shoppingCarService.shoppingCarList(userId);
-        Map<String,Object> resultData = new HashedMap();
-        if(shoppingCars != null && shoppingCars.size()>0){
-            resultData.put("cart",shoppingCars);
-        }else {
-            resultData.put("cart","");
+    public JsonData index(@RequestParam(value = "user_id")Integer userId,
+                     @RequestParam(value = "sessionKey")String sessionKey){
+
+        String checkStr = stringRedisTemplate.opsForValue().get(SESSION_KEY_PRE+":"+sessionKey);
+
+        if("login success".equals(checkStr)){
+            // 验证成功
+            List<ShoppingCar> shoppingCars = shoppingCarService.shoppingCarList(userId);
+
+            if(shoppingCars != null){
+                return JsonData.success(1,"返回商品数据",shoppingCars);
+            }else {
+                return JsonData.success(1,"商品为空","");
+            }
         }
-        return resultData;
+        return JsonData.fail(500,"购物车查询失败");
     }
 
 
     // 修改购物车商品数量
     @PostMapping(value = "up_cart")
     @ResponseStatus(value = HttpStatus.OK)
-    public Map upCart(@RequestParam(value = "user_id")String userId,
+    public Map upCart(@RequestParam(value = "user_id")Integer userId,
                       @RequestParam(value = "num")Integer num,
                       @RequestParam(value = "cart_id")Integer cartId){
         shoppingCarService.updateByUidId(userId,cartId,num);
@@ -113,26 +121,21 @@ public class ShoppingController {
         return resultData;
     }
 
+
     // 删除购物车商品
     @PostMapping(value = "delete")
     @ResponseStatus(value = HttpStatus.OK)
-    public Map delete(@RequestParam(value = "cart_id")Integer cartId,
-                      HttpServletRequest request){
+    public JsonData delete(@RequestParam(value = "cart_id")Integer cartId,
+                      @RequestParam(value = "sessionKey")String sessionKey){
 
-        if(WechatRequestCheck.check(request,token)){
+        String checkStr = stringRedisTemplate.opsForValue().get(SESSION_KEY_PRE + ":" + sessionKey);
+
+        // 验证登录是否有效
+        if("login success".equals(checkStr)){
             Integer result = shoppingCarService.deleteByCartId(cartId);
-            Map<String,Integer> resultData = new HashMap<>();
-            if(result > 0){
-                resultData.put("status",1);
-            }else {
-                resultData.put("status",0);
-            }
-            return resultData;
+            return JsonData.success(1,"查询成功",null);
         }
-        Map<String,Integer> params = new HashMap<>();
-        params.put("cartId",cartId);
-        throw new MallException(MallStatusEnum.CLIENT_CHECK_FAIL,params);
+        throw new MallException(MallStatusEnum.CLIENT_CHECK_FAIL);
     }
-
 
 }

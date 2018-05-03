@@ -13,11 +13,11 @@ public interface AddressService {
     // 查询所有城市
     List<ChinaCity> selectAllProvince();
     // 按uid查询地址
-    List<Address> selectAddressByUid(String uid);
+    List<Address> selectAddressByUid(Integer uid);
     // 修改默认地址
-    Integer updateDefaultAddress(String uid,Integer id);
+    Integer updateDefaultAddress(Integer uid,Integer id);
     // 删除用户地址
-    Integer deleteByUidId(String uid,Integer id);
+    Integer deleteByUidId(Integer uid,Integer id);
     // 按省的id来查询城市列表
     List<ChinaCity> selectCityByProvinceId(Integer provinceId);
     // 按城市来查找区域列表
@@ -28,4 +28,8 @@ public interface AddressService {
     Integer addAddress(Address address);
     // 按ids查询省市区
     String selectByProvinceCityAreaById(List ids);
+    // 查询用户的默认地址
+    Address selectDefaultByUid(Integer uid);
+    // 按id来查询地址
+    Address selectById(Integer id);
 }

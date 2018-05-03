@@ -31,7 +31,7 @@ public class ShoppingCarMapperTest {
         shoppingCar.setNum(3333);
         shoppingCar.setBuff("属性");
         shoppingCar.setAddtime(new Date());
-        shoppingCar.setUid("oaslkdhfkjahsd");
+        shoppingCar.setUid(0);
         shoppingCar.setShopId(2);
         shoppingCar.setGid(3);
         shoppingCar.setType(new Byte("2"));
@@ -41,25 +41,25 @@ public class ShoppingCarMapperTest {
 
     @Test
     public void selectShoppingByUid(){
-        List<ShoppingCar> shoppingList = shoppingCarMapper.selectShoppingByUid("okmci0fpB6FmEcD78aZb57E4AJ54");
+        List<ShoppingCar> shoppingList = shoppingCarMapper.selectShoppingByUid(0);
         System.out.println(shoppingList);
     }
 
     @Test
     public void selectAllByUid(){
-        List<ShoppingCar> list = shoppingCarMapper.selectShoppingByUid("oaslkdhfkjahsd");
+        List<ShoppingCar> list = shoppingCarMapper.selectShoppingByUid(0);
         System.out.println(list);
     }
 
     @Test
     public void updateByUidId(){
-        Integer result = shoppingCarMapper.updateByUidId("okmci0fpB6FmEcD78aZb57E4AJ54", 10, 11);
+        Integer result = shoppingCarMapper.updateByUidId(0, 10, 11);
         System.out.println(result);
     }
 
     @Test
     public void selectByUidPid(){
-        ShoppingCar shoppingCar = shoppingCarMapper.selectByUidPid("okmci0fpB6FmEcD78aZb57E4AJ54", 269);
+        ShoppingCar shoppingCar = shoppingCarMapper.selectByUidPid(0, 269);
         System.out.println(shoppingCar);
     }
 
@@ -71,7 +71,7 @@ public class ShoppingCarMapperTest {
         shoppingCar.setNum(3333);
         shoppingCar.setBuff("哈哈,测试成功了");
         shoppingCar.setAddtime(new Date());
-        shoppingCar.setUid("oaslkdhfkjahsd");
+        shoppingCar.setUid(0);
         shoppingCar.setShopId(2);
         shoppingCar.setGid(3);
         shoppingCar.setType(new Byte("2"));

@@ -32,12 +32,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public List<Address> selectAddressByUid(String uid) {
+    public List<Address> selectAddressByUid(Integer uid) {
         return addressMapper.selectByUid(uid);
     }
 
     @Override
-    public Integer updateDefaultAddress(String uid,Integer id) {
+    public Integer updateDefaultAddress(Integer uid,Integer id) {
         // 把用户的所有地址设置为不是默认
         addressMapper.updateByUid(0,uid);
         // 把指定id的地址设为默认
@@ -46,7 +46,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     @Transactional
-    public Integer deleteByUidId(String uid, Integer id) {
+    public Integer deleteByUidId(Integer uid, Integer id) {
         return addressMapper.deleteByUidId(uid,id);
     }
 
@@ -94,6 +94,24 @@ public class AddressServiceImpl implements AddressService {
             return addressStr;
         }
         return null;
+    }
+
+    /**
+     * @param uid 传一个用户id
+     * @return address 返回默认的用户地址
+     * */
+    @Override
+    public Address selectDefaultByUid(Integer uid) {
+        Address address = addressMapper.selectDefaultAddressByUid(uid);
+        return address;
+    }
+
+    /**
+     * @param id 地址的id
+     * */
+    @Override
+    public Address selectById(Integer id) {
+        return addressMapper.selectById(id);
     }
 
 }

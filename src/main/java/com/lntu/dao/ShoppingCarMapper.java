@@ -10,11 +10,11 @@ public interface ShoppingCarMapper {
     // 添加购物车商品
     Integer add(ShoppingCar shoppingCar);
     // 按照用户查询所有商品
-    List<ShoppingCar> selectShoppingByUid(@Param(value = "uid") String uid);
+    List<ShoppingCar> selectShoppingByUid(@Param(value = "uid") Integer uid);
     // 修改购物车商品数量
-    Integer updateByUidId(@Param(value = "uid")String uid,@Param(value = "id")Integer id,@Param(value = "num")Integer num);
+    Integer updateByUidId(@Param(value = "uid")Integer uid,@Param(value = "id")Integer id,@Param(value = "num")Integer num);
     // 按照pid和uid查找商品
-    ShoppingCar selectByUidPid(@Param(value = "uid") String uid,@Param(value = "pid") Integer pid);
+    ShoppingCar selectByUidPid(@Param(value = "uid") Integer uid,@Param(value = "pid") Integer pid);
     // 按照pid和uid修改商品
     Integer updateByUidPid(ShoppingCar shoppingCar);
     // 按照购物车id删除购物车商品

@@ -4,7 +4,7 @@
 
   <resultMap id="BaseResultMap" type="com.lntu.entity.UserVoucher">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="vid" jdbcType="INTEGER" property="vid" />
     <result column="shop_id" jdbcType="INTEGER" property="shopId" />
     <result column="full_money" jdbcType="DECIMAL" property="fullMoney" />
@@ -90,7 +90,30 @@
 
   <!--按uid查询优惠券-->
   <select id="selectByUid" resultMap="BaseResultMap">
-    SELECT <include refid="Base_Column_List"/> FROM bgk_user_voucher WHERE uid=#{uid}
+    SELECT <include refid="Base_Column_List"/> FROM bgk_user_voucher WHERE uid=#{uid} and status = 1
   </select>
+
+
+  <select id="selectByVidUid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from bgk_user_voucher where vid=#{vid} and uid=#{uid} and status = 1
+  </select>
+
+  <!--按照vid 和 uid来修改优惠券信息-->
+  <update id="updateByVidUid">
+    update bgk_user_voucher
+    <set>
+      <if test="id != null">id=#{id},</if>
+      <if test="uid != null">uid=#{uid},</if>
+      <if test="vid != null">vid=#{vid},</if>
+      <if test="shopId != null">shop_id=#{shopId},</if>
+      <if test="fullMoney != null">full_money=#{fullMoney},</if>
+      <if test="amount != null">amount=#{amount},</if>
+      <if test="startTime != null">start_time=#{startTime},</if>
+      <if test="endTime != null">end_time=#{endTime},</if>
+      <if test="addtime != null">addtime=#{addtime},</if>
+      <if test="status != null">status=#{status},</if>
+    </set>
+    where vid=#{vid} and uid=#{uid}
+  </update>
 
 </mapper>

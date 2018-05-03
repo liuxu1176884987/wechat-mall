@@ -21,21 +21,27 @@ public class AddressMapperTest {
 
     @Test
     public void selectByUid() throws Exception {
-        List<Address> addresses = addressMapper.selectByUid("1");
+        List<Address> addresses = addressMapper.selectByUid(1);
         System.out.println(addresses);
     }
 
     @Test
     public void updateByUid(){
-        Integer result = addressMapper.updateByUid(0, "okmci0fpB6FmEcD78aZb57E4AJ54");
-        addressMapper.updateByUidId(1,"okmci0fpB6FmEcD78aZb57E4AJ54",2);
+        Integer result = addressMapper.updateByUid(0, 11);
+        addressMapper.updateByUidId(1,11,2);
         System.out.println(result);
     }
 
     @Test
     public void deleteByUidId(){
-        Integer result = addressMapper.deleteByUidId("okmci0fpB6FmEcD78aZb57E4AJ54", 10);
+        Integer result = addressMapper.deleteByUidId(11, 10);
         System.out.println(result);
+    }
+
+    @Test
+    public void selectDefaultAddressByUid(){
+        Address address = addressMapper.selectDefaultAddressByUid(10);
+        System.out.println(address);
     }
 
 }

@@ -25,7 +25,7 @@ public class Address {
 
     private Integer code;
 
-    private String uid;
+    private Integer uid;
 
     private Byte isDefault;
 

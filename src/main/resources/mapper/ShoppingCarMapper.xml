@@ -19,7 +19,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="proName"/>
     <result column="photo_x" property="photoX"/>
-    <result column="price" property="price"/>
+    <result column="price_yh" property="priceYh"/>
     <result column="num" property="num"/>
   </resultMap>
 
@@ -64,9 +64,9 @@
   </insert>
 
 
-  <!--修改photoX-->
+
   <select id="selectShoppingByUid" resultMap="Shopping_car_view_data">
-      SELECT bgk_shopping_car.id,bgk_product.name,bgk_product.photo_x,bgk_product.price,bgk_shopping_car.num
+      SELECT bgk_shopping_car.id,bgk_product.name,bgk_product.photo_x,bgk_product.price_yh,bgk_shopping_car.num
       FROM bgk_shopping_car
       LEFT JOIN bgk_product
       ON bgk_shopping_car.pid = bgk_product.id
@@ -98,7 +98,7 @@
 
   <!--按照ids来查询购物车中的商品-->
   <select id="selectByIds" resultMap="Shopping_car_view_data">
-    SELECT bgk_shopping_car.id,bgk_product.name,bgk_product.photo_x,bgk_product.price,bgk_shopping_car.num
+    SELECT bgk_shopping_car.id,bgk_product.name,bgk_product.photo_x,bgk_product.price_yh,bgk_shopping_car.num
       FROM bgk_shopping_car
       LEFT JOIN bgk_product
       ON bgk_shopping_car.pid = bgk_product.id

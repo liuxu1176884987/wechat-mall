@@ -12,7 +12,7 @@ public class UserVoucher {
 
     private Integer id;
 
-    private String uid;
+    private Integer uid;
 
     private Integer vid;
 

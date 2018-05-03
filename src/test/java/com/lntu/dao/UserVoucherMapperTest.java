@@ -24,7 +24,7 @@ public class UserVoucherMapperTest {
     @Test
     public void insert() throws Exception {
         UserVoucher userVoucher = new UserVoucher();
-        userVoucher.setUid("xxxxxxxxxxxxx");
+        userVoucher.setUid(1);
         userVoucher.setVid(3333);
         userVoucher.setShopId(333);
         userVoucher.setFullMoney(new BigDecimal(200));
@@ -38,8 +38,22 @@ public class UserVoucherMapperTest {
 
     @Test
     public void selectByUid(){
-        List<UserVoucher> list = userVoucherMapper.selectByUid("xxxxxxxxxxxxx");
+        List<UserVoucher> list = userVoucherMapper.selectByUid(1);
         System.out.println(list);
+    }
+
+    @Test
+    public void selectByVidUid(){
+        UserVoucher userVoucher = userVoucherMapper.selectByVidUid(8, 10);
+        System.out.println(userVoucher);
+    }
+
+    @Test
+    public void updateByVidUid(){
+        UserVoucher userVoucher = userVoucherMapper.selectByVidUid(8, 10);
+        userVoucher.setStatus(new Byte("0"));
+        userVoucher.setShopId(0);
+        userVoucherMapper.updateByVidUid(userVoucher);
     }
 
 }
