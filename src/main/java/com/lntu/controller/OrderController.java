@@ -4,15 +4,15 @@ import com.lntu.common.JsonData;
 import com.lntu.entity.Address;
 import com.lntu.entity.Order;
 import com.lntu.entity.OrderProduct;
-import com.lntu.entity.Product;
 import com.lntu.enums.MallStatusEnum;
+import com.lntu.enums.OrderStatusEnum;
 import com.lntu.exception.MallException;
 import com.lntu.service.*;
 import com.lntu.utils.LoginCheckUtil;
+import com.lntu.view.OrderDetailViewData;
 import com.lntu.view.ShoppingCarViewData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -139,9 +139,10 @@ public class OrderController {
             // 插入订单商品数据
             List<OrderProduct> orderProductList = new ArrayList<>();
             List<ShoppingCarViewData> productList = shoppingCarService.productViewDataByIds(idList);
+
             // TODO 支付单号未填写  规格未填写
             productList.forEach(product->{
-                orderProductList.add(new OrderProduct(product.getId(),"",order.getId(),product.getProName(),
+                orderProductList.add(new OrderProduct(product.getProId(),"",order.getId(),product.getProName(),
                         product.getPriceYh(),product.getPhotoX(),"",new Date(),product.getNum(),""));
             });
             orderProductService.insertOrderProduct(orderProductList);
@@ -154,4 +155,69 @@ public class OrderController {
         return null;
     }
 
+    /**
+     * 查看订单
+     * */
+    @PostMapping(value = "index")
+    public JsonData index(@RequestParam(value = "uid")Integer uid,
+                          @RequestParam(value = "order_type")String orderType,
+                          @RequestParam(value = "page")Integer page,
+                          @RequestParam(value = "sessionKey")String sessionKey){
+        Boolean check = loginCheckUtil.check(sessionKey);
+        if(check){
+            // 1.订单状态
+            Integer orderStatus = null;
+            if("pay".equals(orderType) || "undefined".equals(orderType)){
+                orderStatus = OrderStatusEnum.ORDER_NOT_PAY.getStatus();
+            }else if("receive".equals(orderType)){
+                orderStatus = OrderStatusEnum.WAIT_RECEIPT.getStatus();
+            }else if("finish".equals(orderType)){
+                orderStatus = OrderStatusEnum.ORDER_FINISH.getStatus();
+            }
+            // 2.按uid和status来查询订单信息
+            List<OrderDetailViewData> orderDetailViewData = orderProductService.selectOrderProductByUidStatus(uid, orderStatus);
+            return JsonData.success(1,"订单商品查询成功",orderDetailViewData);
+        }
+        throw new MallException(MallStatusEnum.CLIENT_CHECK_FAIL);
+    }
+
+    /**
+     * 取消订单
+     * */
+    @PostMapping(value = "orders_edit")
+    public JsonData ordersEdit(@RequestParam(value = "id")Integer id,
+                               @RequestParam(value = "sessionKey")String sessionKey){
+
+        Boolean check = loginCheckUtil.check(sessionKey);
+        if (check){
+            Integer status = orderService.cancelOrder(id);
+            if(status > 0){
+                return JsonData.success(1,"取消订单成功",null);
+            }
+            // 取消订单
+            throw new MallException(MallStatusEnum.CANCEL_ORDER_FAIL);
+        }
+        // 取消订单
+        throw new MallException(MallStatusEnum.CLIENT_CHECK_FAIL);
+    }
+
+    @PostMapping(value = "order_details")
+    public JsonData orderDetails(@RequestParam(value = "order_id")Integer orderId,
+                                 @RequestParam(value = "sessionKey")String sessionKey){
+
+        Boolean check = loginCheckUtil.check(sessionKey);
+        if(check){
+            // 1.查询订单
+            Order order = orderService.selectOrderById(orderId);
+            // 2.查询订单中的商品
+            List<OrderDetailViewData> orderDetailViewData = orderProductService.selectOrderProductById(orderId);
+
+            Map<String,Object> resultData = new HashMap<>();
+            resultData.put("pro",orderDetailViewData);
+            resultData.put("ord",order);
+
+            return JsonData.success(1,"查询订单成功",resultData);
+        }
+        throw new MallException(MallStatusEnum.CLIENT_CHECK_FAIL);
+    }
 }

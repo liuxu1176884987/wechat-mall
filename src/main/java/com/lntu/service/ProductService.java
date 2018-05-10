@@ -25,4 +25,7 @@ public interface ProductService {
     List<Product> selectByIds(List ids);
     // 按uid来查找收藏的商品
     List<ProductSc> selectByUid(Integer uid);
+    // 按分类id来查询商品
+    List<Product> selectProductByCid(Integer uid);
+    List<Product> getMore(Integer page,Integer catId);
 }

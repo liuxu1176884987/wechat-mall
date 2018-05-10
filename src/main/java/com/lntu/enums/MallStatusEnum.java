@@ -11,6 +11,7 @@ public enum MallStatusEnum {
     CLIENT_CHECK_FAIL(5003,"客户端验证失败"),
     ADD_SHOPPING_CAR_FAIL(5004,"添加购物车商品失败"),
     SHOPPING_SELECT_FAIL(5005,"购物车查询失败"),
+    CANCEL_ORDER_FAIL(5006,"取消订单失败"),
     GET_USER_INFO_FAIL(4001,"获取用户信息失败")
     ;
     private Integer state;

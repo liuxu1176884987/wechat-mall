@@ -66,4 +66,9 @@
     </foreach>
   </select>
 
+  <!--按分类信息查找商品-->
+  <select id="selectProductByCid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from bgk_product where cid = #{cid}
+  </select>
+
 </mapper>

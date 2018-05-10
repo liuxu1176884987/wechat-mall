@@ -169,7 +169,7 @@ CREATE TABLE `bgk_category` (
   `tid` int(11) NOT NULL DEFAULT '0' COMMENT '父级分类id',
   `name` varchar(50) NOT NULL COMMENT '栏目名称',
   `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-  `addtime` int(11) NOT NULL DEFAULT '0' COMMENT '添加时间',
+  `addtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   `concent` varchar(255) DEFAULT NULL COMMENT '栏目简介',
   `bz_1` varchar(100) DEFAULT NULL COMMENT '缩略图',
   `bz_2` varchar(255) DEFAULT NULL COMMENT '备注字段',
@@ -177,11 +177,11 @@ CREATE TABLE `bgk_category` (
   `bz_4` tinyint(2) NOT NULL DEFAULT '0' COMMENT '备用字段',
   `bz_5` varchar(100) DEFAULT NULL COMMENT '推荐略缩图',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bgk_category` */
 
-insert  into `bgk_category`(`id`,`tid`,`name`,`sort`,`addtime`,`concent`,`bz_1`,`bz_2`,`bz_3`,`bz_4`,`bz_5`) values (1,0,'产品分类（系统分类，不要删除）',0,0,'','',NULL,'',0,NULL),(2,1,'手机',1,1493188517,'手机','UploadFiles/category/20170630/1498815628850398.png','0',NULL,0,NULL),(3,1,'笔记本',2,1493188587,'笔记本','UploadFiles/category/20170630/1498816659516131.png','1',NULL,0,NULL),(4,1,'智能硬件',3,1493188655,'智能硬件','UploadFiles/category/20170630/1498817044193439.png',NULL,NULL,0,NULL),(5,4,'路由器',1,1493188735,'路由器','UploadFiles/category/20170630/1498817235977098.png','1',NULL,0,NULL),(12,1,'周边配件',5,1495694783,'周边配件','UploadFiles/category/20170630/1498817466248911.jpg',NULL,NULL,0,NULL),(8,2,'红米',1,1494211044,'红米','UploadFiles/category/20170630/1498816164528404.png',NULL,NULL,0,NULL),(9,3,'电脑',1,1494211080,'电脑','UploadFiles/category/20170630/1498816738489391.png',NULL,NULL,0,NULL),(13,12,'耳机',1,1495694905,'耳机','UploadFiles/category/20170630/1498817567512643.jpg',NULL,NULL,0,NULL),(19,12,'手环',0,1498818093,'手环','UploadFiles/category/20170630/1498818092623976.jpg',NULL,NULL,0,NULL),(15,2,'小米',2,1495694950,'小米','UploadFiles/category/20170630/1498816223479651.png',NULL,NULL,0,NULL),(16,4,'净化器',2,1495698002,'净化器','UploadFiles/category/20170630/1498817327332325.png',NULL,NULL,0,NULL),(17,3,'鼠标',2,1495698212,'鼠标','UploadFiles/category/20170630/1498816813257929.png',NULL,NULL,0,NULL),(18,2,'平板',90,1498640233,'平板','UploadFiles/category/20170630/1498816577371393.png',NULL,NULL,0,NULL);
+insert  into `bgk_category`(`id`,`tid`,`name`,`sort`,`addtime`,`concent`,`bz_1`,`bz_2`,`bz_3`,`bz_4`,`bz_5`) values (1,0,'系统分类(勿删)',0,'2018-05-09 09:28:05',NULL,NULL,NULL,NULL,0,NULL);
 
 /*Table structure for table `bgk_china_city` */
 
@@ -387,11 +387,11 @@ CREATE TABLE `bgk_order` (
   `back_addtime` int(11) DEFAULT '0' COMMENT '申请退款时间',
   `order_type` tinyint(2) DEFAULT '1' COMMENT '订单类型 1普通订单 2抢购订单',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bgk_order` */
 
-insert  into `bgk_order`(`id`,`order_sn`,`pay_sn`,`shop_id`,`uid`,`price`,`amount`,`addtime`,`del`,`type`,`price_h`,`status`,`vid`,`receiver`,`tel`,`address_xq`,`code`,`post`,`remark`,`post_remark`,`product_num`,`trade_no`,`kuaidi_name`,`kuaidi_num`,`back`,`back_remark`,`back_addtime`,`order_type`) values (6,'921590cb1d714d7b908bd08993476fd7',NULL,0,10,'8.00','8.00','2018-05-03 09:28:38',0,'weixin','0.00',10,0,'刘旭','18941809532','河北省 唐山市 开平区 不知道是哪儿',130205,0,'','',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(7,'0a0090db51214d32a4b6b1fae6a6adec',NULL,0,10,'8.00','8.00','2018-05-03 09:32:07',0,'weixin','0.00',10,0,'刘旭','18941809532','河北省 唐山市 开平区 不知道是哪儿',130205,0,'我要吃好吃的','',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(8,'3b3ee3bd9f564067903e49da60da8d24',NULL,0,10,'8.00','8.00','2018-05-03 09:44:50',0,'weixin','0.00',10,0,'刘旭','18941809532','河北省 唐山市 开平区 不知道是哪儿',130205,0,'我要吃好吃的','',1,'',NULL,NULL,NULL,NULL,NULL,1),(9,'5e726f06e4f040a79b18626111acce84',NULL,0,10,'4.00','5.00','2018-05-03 10:28:20',0,'weixin','0.00',10,0,'刘旭','18941809532','河北省 唐山市 开平区 不知道是哪儿',130205,0,'','',1,'',NULL,NULL,NULL,NULL,NULL,1);
+insert  into `bgk_order`(`id`,`order_sn`,`pay_sn`,`shop_id`,`uid`,`price`,`amount`,`addtime`,`del`,`type`,`price_h`,`status`,`vid`,`receiver`,`tel`,`address_xq`,`code`,`post`,`remark`,`post_remark`,`product_num`,`trade_no`,`kuaidi_name`,`kuaidi_num`,`back`,`back_remark`,`back_addtime`,`order_type`) values (12,'49054795188a44c59040607a65e5c0ea',NULL,0,10,'151.60','151.60','2018-05-09 08:42:02',0,'weixin','0.00',10,0,'刘旭','18941809532','河北省 唐山市 开平区 不知道是哪儿',130205,0,'好吃的','',1,'',NULL,NULL,NULL,NULL,NULL,1),(11,'853612575f0948b3b2a3be361ef02a09',NULL,0,10,'20.00','20.00','2018-05-09 08:37:34',0,'weixin','0.00',50,0,'刘旭','18941809532','河北省 唐山市 开平区 不知道是哪儿',130205,0,'','',1,'',NULL,NULL,NULL,NULL,NULL,1);
 
 /*Table structure for table `bgk_order_product` */
 
@@ -410,9 +410,11 @@ CREATE TABLE `bgk_order_product` (
   `num` int(11) NOT NULL DEFAULT '1' COMMENT '购买数量',
   `pro_guige` varchar(50) DEFAULT NULL COMMENT '规格id和规格名称',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bgk_order_product` */
+
+insert  into `bgk_order_product`(`id`,`pid`,`pay_sn`,`order_id`,`name`,`price`,`photo_x`,`pro_buff`,`addtime`,`num`,`pro_guige`) values (9,264,'',11,'雷米高新澳丽得猫粮海洋鱼味英国短毛折耳猫猫粮去毛球幼猫粮500g','4.00','11.jpg','','2018-05-09 08:37:34',5,''),(10,265,'',12,'狗狗沐浴露宠物专业护理香波八合一泰迪金毛比熊犬猫抑菌除臭止痒','37.90','11.jpg','','2018-05-09 08:42:02',4,'');
 
 /*Table structure for table `bgk_post` */
 
@@ -659,11 +661,9 @@ CREATE TABLE `bgk_shopping_car` (
   `gid` int(11) DEFAULT '0' COMMENT '规格id',
   `type` tinyint(2) DEFAULT '2' COMMENT '0是热卖，1是团购，2是普通商品',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 /*Data for the table `bgk_shopping_car` */
-
-insert  into `bgk_shopping_car`(`id`,`pid`,`price`,`num`,`buff`,`addtime`,`uid`,`shop_id`,`gid`,`type`) values (1,264,'13.00',1,'','2018-05-02 14:47:09',10,0,NULL,NULL);
 
 /*Table structure for table `bgk_student_style` */
 

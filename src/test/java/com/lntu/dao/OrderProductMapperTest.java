@@ -1,6 +1,7 @@
 package com.lntu.dao;
 
 import com.lntu.entity.OrderProduct;
+import com.lntu.view.OrderDetailViewData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,4 +55,11 @@ public class OrderProductMapperTest {
 
         orderProductMapper.insertOrderProduct(list);
     }
+
+    @Test
+    public void selectOrderProductByUid(){
+        List<OrderDetailViewData> orderDetailViewData = orderProductMapper.selectOrderProductByUidStatus(10, 10);
+        System.out.println(orderDetailViewData);
+    }
+
 }

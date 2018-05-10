@@ -24,6 +24,8 @@ public class ProductViewData {
     private Integer isHot;
     //销量
     private Integer shiyong;
+    // 商品收藏id
+    private Integer scId;
 
     public ProductViewData(Integer id, String photoX, String name, Integer priceYh, Integer price, Integer isShow, Integer isHot, Integer shiyong) {
         this.id = id;

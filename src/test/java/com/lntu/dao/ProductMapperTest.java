@@ -76,4 +76,10 @@ public class ProductMapperTest {
         System.out.println(products);
     }
 
+    @Test
+    public void selectProductByCid(){
+        List<Product> products = productMapper.selectProductByCid(15);
+        System.out.println(products);
+    }
+
 }

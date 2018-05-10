@@ -1,5 +1,7 @@
 package com.lntu.controller;
 
+import com.lntu.common.JsonData;
+import com.lntu.entity.Product;
 import com.lntu.entity.ProductWithBLOBs;
 import com.lntu.enums.MallStatusEnum;
 import com.lntu.exception.MallException;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,6 +76,21 @@ public class ProductController {
     public Integer initSc(@RequestParam(value = "uid")Integer uid,
                            @RequestParam(value = "pid")Integer pid){
         return productService.initSc(pid,uid);
+    }
+
+    // 展示分类商品列表
+    @PostMapping(value = "lists")
+    public JsonData lists(@RequestParam(value = "cat_id")Integer catId){
+        List<Product> products = productService.selectProductByCid(catId);
+        return JsonData.success(1,"查询分类商品成功",products);
+    }
+
+
+    // 获取更多商品
+    @PostMapping(value = "get_more")
+    public JsonData getMore(@RequestParam(value = "page")Integer page,@RequestParam(value = "cat_id")Integer catId){
+        List<Product> more = productService.getMore(page, catId);
+        return JsonData.success(1,"获取更多商品",more);
     }
 
 }

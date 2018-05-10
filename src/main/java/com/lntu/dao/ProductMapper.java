@@ -2,6 +2,7 @@ package com.lntu.dao;
 
 import com.lntu.entity.Product;
 import com.lntu.entity.ProductWithBLOBs;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,4 +13,6 @@ public interface ProductMapper {
     ProductWithBLOBs selectById(Integer id);
     // 按ids查询商品
     List<Product> selectByIds(List ids);
+    // 按分类查找商品
+    List<Product> selectProductByCid(@Param(value = "cid")Integer cid);
 }

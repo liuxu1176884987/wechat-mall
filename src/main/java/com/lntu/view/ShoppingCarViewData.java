@@ -25,6 +25,8 @@ public class ShoppingCarViewData {
     private Integer num;
     // 商品优惠价格
     private BigDecimal priceYh;
+    // 商品id
+    private Integer proId;
 
     public ShoppingCarViewData() {
     }

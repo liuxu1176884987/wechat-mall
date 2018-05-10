@@ -1,11 +1,15 @@
 package com.lntu.dao;
 
+import com.lntu.entity.Product;
 import com.lntu.entity.ProductSc;
+import com.lntu.view.ProductViewData;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
 
 /**
  * Created by lx-pc on 2018/4/10.
@@ -35,6 +39,12 @@ public class ProductScMapperTest {
     @Test
     public void updateByUidPid(){
         productScMapper.updateByUidPid(10,2,2);
+    }
+
+    @Test
+    public void selectProductScByUid(){
+        List<ProductViewData> productList = productScMapper.selectProductScByUid(10);
+        System.out.println(productList);
     }
 
 }

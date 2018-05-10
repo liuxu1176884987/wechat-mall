@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lntu.dao.CategoryMapper" >
+
+  <resultMap id="BaseResultMap" type="com.lntu.entity.Category" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="concent" property="concent" jdbcType="VARCHAR" />
+    <result column="bz_1" property="bz1" jdbcType="VARCHAR" />
+    <result column="bz_2" property="bz2" jdbcType="VARCHAR" />
+    <result column="bz_3" property="bz3" jdbcType="VARCHAR" />
+    <result column="bz_4" property="bz4" jdbcType="TINYINT" />
+    <result column="bz_5" property="bz5" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, tid, name, sort, addtime, concent, bz_1, bz_2, bz_3, bz_4, bz_5
+  </sql>
+
+
+  <!--按id查分类-->
+  <select id="selectCategoryByTid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from bgk_category where tid = #{tid}
+  </select>
+
+
+
+
+
+
+
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bgk_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bgk_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.lntu.entity.Category" >
+    insert into bgk_category (id, tid, name, 
+      sort, addtime, concent, 
+      bz_1, bz_2, bz_3, bz_4, 
+      bz_5)
+    values (#{id,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{addtime,jdbcType=TIMESTAMP}, #{concent,jdbcType=VARCHAR}, 
+      #{bz1,jdbcType=VARCHAR}, #{bz2,jdbcType=VARCHAR}, #{bz3,jdbcType=VARCHAR}, #{bz4,jdbcType=TINYINT}, 
+      #{bz5,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lntu.entity.Category" >
+    insert into bgk_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="concent != null" >
+        concent,
+      </if>
+      <if test="bz1 != null" >
+        bz_1,
+      </if>
+      <if test="bz2 != null" >
+        bz_2,
+      </if>
+      <if test="bz3 != null" >
+        bz_3,
+      </if>
+      <if test="bz4 != null" >
+        bz_4,
+      </if>
+      <if test="bz5 != null" >
+        bz_5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="concent != null" >
+        #{concent,jdbcType=VARCHAR},
+      </if>
+      <if test="bz1 != null" >
+        #{bz1,jdbcType=VARCHAR},
+      </if>
+      <if test="bz2 != null" >
+        #{bz2,jdbcType=VARCHAR},
+      </if>
+      <if test="bz3 != null" >
+        #{bz3,jdbcType=VARCHAR},
+      </if>
+      <if test="bz4 != null" >
+        #{bz4,jdbcType=TINYINT},
+      </if>
+      <if test="bz5 != null" >
+        #{bz5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lntu.entity.Category" >
+    update bgk_category
+    <set >
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="concent != null" >
+        concent = #{concent,jdbcType=VARCHAR},
+      </if>
+      <if test="bz1 != null" >
+        bz_1 = #{bz1,jdbcType=VARCHAR},
+      </if>
+      <if test="bz2 != null" >
+        bz_2 = #{bz2,jdbcType=VARCHAR},
+      </if>
+      <if test="bz3 != null" >
+        bz_3 = #{bz3,jdbcType=VARCHAR},
+      </if>
+      <if test="bz4 != null" >
+        bz_4 = #{bz4,jdbcType=TINYINT},
+      </if>
+      <if test="bz5 != null" >
+        bz_5 = #{bz5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lntu.entity.Category" >
+    update bgk_category
+    set tid = #{tid,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      concent = #{concent,jdbcType=VARCHAR},
+      bz_1 = #{bz1,jdbcType=VARCHAR},
+      bz_2 = #{bz2,jdbcType=VARCHAR},
+      bz_3 = #{bz3,jdbcType=VARCHAR},
+      bz_4 = #{bz4,jdbcType=TINYINT},
+      bz_5 = #{bz5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>

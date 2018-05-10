@@ -115,5 +115,27 @@ public class ProductServiceImpl implements ProductService {
         return productScMapper.selectByUid(uid);
     }
 
+    /**
+     * @param cid 商品分类id
+     * */
+    @Override
+    public List<Product> selectProductByCid(Integer cid) {
+        PageHelper.startPage(1,20,false);
+        return productMapper.selectProductByCid(cid);
+    }
+
+    /**
+     * <pre>
+     *     获取分类的更多商品
+     * </pre>
+     * @param page 当前页面
+     * @param catId 分类id
+     * */
+    @Override
+    public List<Product> getMore(Integer page, Integer catId) {
+        PageHelper.startPage(page,20,false);
+        return productMapper.selectProductByCid(catId);
+    }
+
 
 }

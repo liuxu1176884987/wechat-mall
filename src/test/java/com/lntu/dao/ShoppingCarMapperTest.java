@@ -91,7 +91,7 @@ public class ShoppingCarMapperTest {
     @Test
     public void selectByIds(){
         List<Integer> ids = new ArrayList<>();
-        ids.add(21);
+        ids.add(264);
         List<ShoppingCarViewData> products = shoppingCarMapper.selectByIds(ids);
         sop(products);
     }

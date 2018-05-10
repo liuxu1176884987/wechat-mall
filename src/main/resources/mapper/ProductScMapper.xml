@@ -9,9 +9,17 @@
     <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
 
+  <resultMap id="ResultMap_ProductViewData" type="com.lntu.view.ProductViewData">
+    <id column="id" property="id"/>
+    <result column="photo_x" property="photoX"/>
+    <result column="name" property="name"/>
+    <result column="price_yh" property="price"/>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     id, pid, uid, status
   </sql>
+
 
   <insert id="insert">
     INSERT INTO bgk_product_sc(pid,uid,status) VALUES (#{pid},#{uid},#{status});
@@ -27,6 +35,14 @@
 
   <select id="selectByUid" resultMap="BaseResultMap">
     SELECT <include refid="Base_Column_List"/> from bgk_product_sc WHERE uid=#{uid}
+  </select>
+
+  <!--商品收藏列表展示-->
+  <select id="selectProductScByUid" resultMap="ResultMap_ProductViewData">
+    select bgk_product.photo_x,bgk_product.id,bgk_product.name,bgk_product.price_yh from bgk_product
+    left join bgk_product_sc
+    on bgk_product.id = bgk_product_sc.pid
+    where bgk_product_sc.uid = #{uid} and status = 1
   </select>
 
 </mapper>
